@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QuestionScreen extends StatefulWidget {
   @override
@@ -8,6 +9,11 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return BlocProvider(
+      create: (BuildContext context) {},
+      child: Scaffold(
+        appBar: AppBar(),
+      ),
+    );
   }
 }
