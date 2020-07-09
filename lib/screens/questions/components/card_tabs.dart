@@ -1,3 +1,4 @@
+import 'package:business_model_canvas/models/questions_list.dart';
 import 'package:business_model_canvas/screens/questions/components/question_cards.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +8,13 @@ class CardTabs extends StatefulWidget {
 }
 
 class _CardTabsState extends State<CardTabs> with TickerProviderStateMixin{
-  List<String> myList = ['Question 1', 'Question 2', 'Question 3'];
+  List<String> myList = QuestionsList.questionList;
   TabController _cardController;
 
   @override
   void initState() {
     super.initState();
-    _cardController= new TabController(length: myList.length, vsync: this);
+    _cardController = new TabController(length: myList.length, vsync: this);
   }
 
   @override
