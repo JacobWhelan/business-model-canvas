@@ -1,3 +1,4 @@
+import 'package:business_model_canvas/screens/questions/components/question_cards.dart';
 import 'package:flutter/material.dart';
 
 class CardTabs extends StatefulWidget {
@@ -22,14 +23,9 @@ class _CardTabsState extends State<CardTabs> with TickerProviderStateMixin{
       children: myList.isEmpty
           ? <Widget>[]
           : myList.map((questions) {
-        return new Card(
-          child: new Container(
-              height: 450.0,
-              width: 300.0,
-              child: Center(
-                child: Text(questions),
-              ),
-        ));
+        return new QuestionCard(
+          questionText: questions,
+        );
       }).toList(),
     );
   }
