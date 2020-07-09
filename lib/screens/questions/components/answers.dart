@@ -8,35 +8,48 @@ class AnswerField extends StatefulWidget {
 class _AnswerFieldState extends State<AnswerField> {
   final _answerController = TextEditingController();
   List<String> _answers = <String>[];
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
-          TextField(
-            controller: _answerController,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-                border: InputBorder.none, hintText: "hint Example"),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                FractionallySizedBox(
+                  widthFactor: .7,
+                  child: TextFormField(
+                    controller: _answerController,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      hintText: "Hint Text",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                RaisedButton(
+                    child: Text("Submit"),
+                    onPressed: () {
+                      _answers.add(_answerController.text);
+                    }),
+                //Temporary button to display submitted answers
+                OutlineButton(
+                    child: Text("Show Answers"),
+                    onPressed: () {
+                      return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text(_answers.toString()),
+                            );
+                          });
+                    })
+              ],
+            ),
           ),
-          RaisedButton(
-              child: Text("Submit"),
-              onPressed: () {
-                _answers.add(_answerController.text);
-              }),
-          //Temporary button to display submitted answers
-          RaisedButton(
-              child: Text("Show Answers"),
-              onPressed: () {
-                return showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: Text(_answers.toString()),
-                      );
-                    });
-              })
         ],
       ),
     );
