@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class QuestionCard extends StatefulWidget {
   final String questionText;
 
-  const QuestionCard(this.questionText);
+  const QuestionCard({Key key, this.questionText}) : super(key: key);
 
   @override
   _QuestionCardState createState() => _QuestionCardState();
