@@ -1,4 +1,3 @@
-[Logo](https://raw.githubusercontent.com/b106tech/b106tech.github.io/master/images/logo.png)
 #Business Model Canvas
 
 Business model canvas application built with Flutter
