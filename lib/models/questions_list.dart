@@ -6,4 +6,6 @@ class QuestionsList {
     "Revenue Streams. How are you being rewarded for your efforts by your consumer base? Provide your projected Revenue Models. Do you make money, or are you a Non-Profit?",
     "Channels and Distribution. How do you distribute your goods and services, how does your product reach your client/consumer base?",
   ];
+
+  static List<String> answerList = List.filled(5, "No Answer Provided");
 }

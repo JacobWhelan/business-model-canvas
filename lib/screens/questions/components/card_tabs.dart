@@ -10,6 +10,7 @@ class CardTabs extends StatefulWidget {
 class _CardTabsState extends State<CardTabs> with TickerProviderStateMixin{
   List<String> myList = QuestionsList.questionList;
   TabController _cardController;
+  int tempIndex = 0;
 
   @override
   void initState() {
@@ -26,7 +27,8 @@ class _CardTabsState extends State<CardTabs> with TickerProviderStateMixin{
           : myList.map((questions) {
         return new QuestionCard(
           questionText: questions,
-        );
+                index: tempIndex++,
+              );
       }).toList(),
     );
   }
