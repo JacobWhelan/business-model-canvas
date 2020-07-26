@@ -7,5 +7,6 @@ class QuestionsList {
     "Channels and Distribution. How do you distribute your goods and services, how does your product reach your client/consumer base?",
   ];
 
-  static List<String> answerList = List.filled(5, "No Answer Provided");
+  static List<String> answerList =
+      List.filled(QuestionsList.questionList.length, "No Answer Provided");
 }

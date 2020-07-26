@@ -1,4 +1,4 @@
-import 'package:business_model_canvas/blocs/answer_bloc.dart';
+import 'package:business_model_canvas/blocs/tab_bloc.dart';
 import 'package:business_model_canvas/models/questions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +15,15 @@ class AnswerField extends StatefulWidget {
 class _AnswerFieldState extends State<AnswerField> {
   final _answerController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  TabBloc tabBloc;
 
-  Widget _buildFormField(AnswerBloc answerBloc) {
+  @override
+  initState() {
+    super.initState();
+    tabBloc = BlocProvider.of<TabBloc>(context);
+  }
+
+  Widget _buildFormField() {
     return FractionallySizedBox(
       widthFactor: .7,
       child: TextFormField(
@@ -30,23 +37,30 @@ class _AnswerFieldState extends State<AnswerField> {
     );
   }
 
-  Widget _buildSubmitButton(AnswerBloc answerBloc) {
+  Widget _buildButton(String label) {
     return RaisedButton(
-        child: Text("Submit"),
+        child: Text(label),
         onPressed: () {
-          QuestionsList.answerList[widget.index] = _answerController.text;
+          switch (label) {
+            case "Submit":
+              tabBloc.add(SubmitEvent(widget.index));
+              QuestionsList.answerList[widget.index] = _answerController.text;
+              break;
+            case "Edit":
+              tabBloc.add(EditEvent(widget.index));
+              break;
+            case "Cancel":
+              tabBloc.add(CancelEvent(widget.index));
+              break;
+            case "Delete":
+              tabBloc.add(DeleteEvent(widget.index));
+              QuestionsList.answerList[widget.index] = "No Answer Provided";
+              break;
+          }
           _answerController.clear();
-          answerBloc.add(AnswerSubmit());
         });
   }
 
-  Widget _buildEditButton(AnswerBloc answerBloc) {
-    return RaisedButton(
-        child: Text("Edit"),
-        onPressed: () {
-          answerBloc.add(AnswerEdit());
-        });
-  }
 
   Widget _buildSubmittedAnswerBox() {
     return FractionallySizedBox(
@@ -58,38 +72,40 @@ class _AnswerFieldState extends State<AnswerField> {
     );
   }
 
-  List<Widget> _mapStateToForm({AnswerBloc answerBloc}) {
-    final AnswerState currentState = answerBloc.state;
+  List<Widget> _mapStateToForm() {
+    final TabState currentState = tabBloc.state[widget.index];
 
-    if (currentState is AnswerInitial
-        && QuestionsList.answerList[widget.index] != "No Answer Provided") {
-      answerBloc.add(AnswerSubmit());
-    }
-
-    if (currentState is AnswerInitial) {
+    if (currentState is InitialState) {
       return [
-        _buildFormField(answerBloc),
-        _buildSubmitButton(answerBloc),
+        _buildFormField(),
+        _buildButton("Submit"),
       ];
     }
-    if (currentState is AnswerSubmitted) {
+    if (currentState is SubmittedState) {
       return [
         _buildSubmittedAnswerBox(),
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: [
-            _buildEditButton(answerBloc),
-            _buildSubmitButton(answerBloc),
+            _buildButton("Delete"),
+            _buildButton("Edit"),
           ],
         )
       ];
     }
 
-    if (currentState is AnswerEditing) {
+    if (currentState is EditingState) {
       return [
         _buildSubmittedAnswerBox(),
-        _buildFormField(answerBloc),
-        _buildSubmitButton(answerBloc),
+        _buildFormField(),
+        ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: [
+            _buildButton("Cancel"),
+            _buildButton("Submit"),
+          ],
+        )
+
       ];
     }
     return [];
@@ -97,23 +113,23 @@ class _AnswerFieldState extends State<AnswerField> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AnswerBloc, AnswerState>(
-      condition: (previousState, state) =>
-      state.runtimeType != previousState.runtimeType,
-      builder: (context, state) =>
-          Center(
+    return BlocBuilder<TabBloc, List<TabState>>(
+        builder: (context, state) {
+          return Center(
             child: Column(
               children: [
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: _mapStateToForm(
-                        answerBloc: BlocProvider.of<AnswerBloc>(context)),
+                    children: _mapStateToForm(),
                   ),
                 ),
               ],
             ),
-          ),
+          );
+        }
     );
   }
+
+
 }
