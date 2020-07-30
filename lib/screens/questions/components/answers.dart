@@ -39,7 +39,6 @@ class _AnswerFieldState extends State<AnswerField> {
 
   Widget _buildButton(String label) {
     return RaisedButton(
-        color: Colors.blue,
         child: Text(label),
         onPressed: () {
           switch (label) {
