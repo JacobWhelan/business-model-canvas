@@ -14,7 +14,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return BlocProvider(
       create: (context) => TabBloc(),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Business Canvas Model'),
+        ),
         body: CardTabs(),
       ),
     );

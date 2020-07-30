@@ -25,7 +25,7 @@ class _AnswerFieldState extends State<AnswerField> {
 
   Widget _buildFormField() {
     return FractionallySizedBox(
-      widthFactor: .7,
+      widthFactor: .8,
       child: TextFormField(
         controller: _answerController,
         textAlign: TextAlign.center,
@@ -39,6 +39,7 @@ class _AnswerFieldState extends State<AnswerField> {
 
   Widget _buildButton(String label) {
     return RaisedButton(
+        color: Colors.blue,
         child: Text(label),
         onPressed: () {
           switch (label) {
@@ -60,7 +61,6 @@ class _AnswerFieldState extends State<AnswerField> {
           _answerController.clear();
         });
   }
-
 
   Widget _buildSubmittedAnswerBox() {
     return FractionallySizedBox(
@@ -105,7 +105,6 @@ class _AnswerFieldState extends State<AnswerField> {
             _buildButton("Submit"),
           ],
         )
-
       ];
     }
     return [];
@@ -113,23 +112,19 @@ class _AnswerFieldState extends State<AnswerField> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TabBloc, List<TabState>>(
-        builder: (context, state) {
-          return Center(
-            child: Column(
-              children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: _mapStateToForm(),
-                  ),
-                ),
-              ],
+    return BlocBuilder<TabBloc, List<TabState>>(builder: (context, state) {
+      return Center(
+        child: Column(
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                children: _mapStateToForm(),
+              ),
             ),
-          );
-        }
-    );
+          ],
+        ),
+      );
+    });
   }
-
-
 }

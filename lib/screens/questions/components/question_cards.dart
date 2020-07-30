@@ -13,7 +13,6 @@ class QuestionCard extends StatefulWidget {
 }
 
 class _QuestionCardState extends State<QuestionCard> {
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,11 +20,15 @@ class _QuestionCardState extends State<QuestionCard> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(widget.questionText,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline)),
+          Container(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 60),
+              child: Text(widget.questionText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(33, 33, 33, 0.8),
+                  ))),
           AnswerField(
             index: widget.index,
           )
